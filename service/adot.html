@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A. (에이닷) - AI Navigate</title>
+    <link rel="stylesheet" href="../css/service.css">
+</head>
+<body>
+    <!-- 고정 헤더 -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo"><img src="../icons/coapass.svg" alt="compass icon" class="logo-icon"> AI Navigate</a>
+            <a href="#" class="back-link">← 메인으로 돌아가기</a>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main>
+        <!-- 좌측: AI 상세 설명 영역 -->
+        <section class="card">
+            <div class="ai-header">
+                <div class="ai-icon">
+                    <img src="../icons/adot.svg" alt="A. Icon" style="width: 60px; height: 60px;">
+                </div>
+                <div class="ai-info">
+                    <h1>A. (에이닷)</h1>
+                    <span class="ai-tag">텍스트·문서 요약</span>
+                </div>
+            </div>
+
+            <article class="content-section">
+                <h3>💡 이 AI는 언제 쓰면 좋을까요?</h3>
+                <p>
+                    SK텔레콤의 휴대전화 요금제를 이용하고 있는 사용자라면, A. (에이닷)을 통해 통화 내용 기록과 일정 관리 자동화, 맞춤형 비서 기능을 활용할 수 있습니다.
+                </p>
+
+                <h3>🎯 실전 프롬프트 예시</h3>
+                <p>
+                    복사해서 바로 사용해보세요. 역할을 부여하고 구체적인 조건을 지시할수록 퀄리티가 높아집니다.
+                </p>
+
+                <div class="prompt-example">
+                    "방금 녹음한 회의 내용에서 핵심 안건과 Action Item만 정리해줘."
+                </div>
+                
+                <h3>🛠️ 활용 꿀팁</h3>
+                <p>
+                    통화 녹음과 AI 요약, 멀티 LLM 비교 검색 기능을 활용하여, 일상 생활에서 가장 가까이에 있는 AI 비서로 활용해보세요.
+                </p>
+            </article>
+        </section>
+
+        <!-- 우측: 요약 및 실행 버튼 -->
+        <aside class="sidebar">
+            <h3>한눈에 보는 핵심 기능</h3>
+            <ul class="feature-list">
+                <li>통화 내용 기록 및 일정 관리 자동화</li>
+                <li>사용자의 맥락과 과거 대화를 기억하는 '맞춤형 비서'</li>
+                <li>여러 인공지능의 답변을 한 번에 비교</li>
+                <li>이동 중이나 여러 기기에서 끊김 없는 연동성</li>
+            </ul>
+
+            <button class="cta-button">A. (에이닷) 바로 시작하기</button>
+
+            <!-- 댓글 섹션 -->
+            <div class="comments-section">
+                <h3>후기 및 댓글</h3>
+
+                <!-- 댓글 목록 -->
+                <div id="commentsList" class="comments-list"></div>
+
+                <!-- 댓글 입력 -->
+                <div class="comment-input-container">
+                    <input
+                        type="text"
+                        id="commentInput"
+                        class="comment-input"
+                        placeholder="후기를 남겨주세요..."
+                    />
+                    <button id="commentSubmit" class="comment-submit">
+                        <svg class="send-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="../js/service.js"></script>
+</body>
+</html>
