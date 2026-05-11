@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google NanoBanana - AI Navigate</title>
+    <link rel="stylesheet" href="../css/service.css">
+</head>
+<body>
+    <!-- 고정 헤더 -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo"><img src="../icons/coapass.svg" alt="compass icon" class="logo-icon"> AI Navigate</a>
+            <a href="#" class="back-link">← 메인으로 돌아가기</a>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main>
+        <!-- 좌측: AI 상세 설명 영역 -->
+        <section class="card">
+            <div class="ai-header">
+                <div class="ai-icon">
+                    <img src="../icons/nanobanana-color.svg" alt="NanoBanana Icon" style="width: 60px; height: 60px;">
+                </div>
+                <div class="ai-info">
+                    <h1>Google NanoBanana</h1>
+                    <span class="ai-tag">이미지·디자인</span>
+                </div>
+            </div>
+
+            <article class="content-section">
+                <h3>💡 이 AI는 언제 쓰면 좋을까요?</h3>
+                <p>
+                    NanoBanana는 Google의 이미지 생성 AI로, 선명한 글자가 포함된 이미지 생성, 기존 이미지의 자연스러운 수정, 현실의 물리법칙이 반영된 사실적인 렌더링이 필요한 상황에서 탁월한 성능을 발휘하며, 디자이너와 개발자 모두에게 매력적인 도구입니다.
+                </p>
+
+                <h3>🎯 실전 프롬프트 예시</h3>
+                <p>
+                    복사해서 바로 사용해보세요. 역할을 부여하고 구체적인 조건을 지시할수록 퀄리티가 높아집니다.
+                </p>
+
+                <div class="prompt-example">
+                    "인물과 장면의 배치를 변경하지 않고 유지하세요. 이미지를 수채화 일러스트로 변환하세요: 부드럽게 번지는 가장자리, 종이 질감, 은은한 채색. 색상은 더 밝아야 하지만 과도하게 채도가 높으면 안 됩니다. 새로운 요소를 추가하지 마세요. 텍스트 없음."
+                </div>
+
+                <h3>🛠️ 활용 꿀팁</h3>
+                <p>
+                    대화하듯 지시하면서 이미지 생성/수정이 가능하므로, 간단한 프롬프트를 통해 빠르게 시각적 아이디어를 구체화하거나, 기존 이미지에 자연스러운 변화를 주고 싶을 때 활용해보세요. 특히, 글자가 포함된 이미지 생성이 필요한 로고 디자인, 광고 배너 제작, UI/UX 디자인 작업에서 NanoBanana의 강력한 기능을 활용할 수 있습니다.
+                </p>
+            </article>
+        </section>
+
+        <!-- 우측: 요약 및 실행 버튼 -->
+        <aside class="sidebar">
+            <h3>한눈에 보는 핵심 기능</h3>
+            <ul class="feature-list">
+                <li>선명한 글자가 포함된 이미지 생성</li>
+                <li>기존 이미지의 자연스러운 수정</li>
+                <li>현실의 물리법칙이 반영된 사실적인 렌더링</li>
+                <li>빠른 성능, 저렴한 API 비용</li>
+            </ul>
+
+            <button class="cta-button">NanoBanana 바로 시작하기</button>
+
+            <!-- 댓글 섹션 -->
+            <div class="comments-section">
+                <h3>후기 및 댓글</h3>
+
+                <!-- 댓글 목록 -->
+                <div id="commentsList" class="comments-list"></div>
+
+                <!-- 댓글 입력 -->
+                <div class="comment-input-container">
+                    <input
+                        type="text"
+                        id="commentInput"
+                        class="comment-input"
+                        placeholder="후기를 남겨주세요..."
+                    />
+                    <button id="commentSubmit" class="comment-submit">
+                        <svg class="send-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="../js/service.js"></script>
+</body>
+</html>
