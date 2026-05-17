@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monica - AI Navigate</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F8F9FA;
+            color: #202124;
+        }
+
+        .header-bar {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            margin: 20px 40px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #6366F1;
+            text-decoration: none;
+        }
+
+        .header-back {
+            margin: 25px 40px;
+            color: #5F6368; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        .header-back:hover {
+            color: #6366F1; 
+            text-decoration: none; 
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static !important;
+            }
+        }
+
+        .card-container {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 16px;
+        }
+
+        .card-inner {
+            padding: 40px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .ai-logo {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ai-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .ai-info h1 {
+            margin: 0 0 8px 0;
+            font-size: 32px;
+            font-weight: bold;
+            color: #202124;
+        }
+
+        .ai-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #EEF2FF;
+            color: #6366F1;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #DADCE0;
+            margin: 30px 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+            color: #202124;
+        }
+
+        p {
+            line-height: 1.7;
+            color: #3C4043;
+            margin-bottom: 25px;
+        }
+
+        .prompt-box {
+            background-color: #F8F9FA;
+            border-left: 4px solid #6366F1;
+            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            color: #202124;
+            font-size: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #5F6368;
+            font-size: 15px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #6366F1;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .comments-section {
+            border-top: 1px solid #DADCE0;
+            padding-top: 30px;
+        }
+
+        .comment-item {
+            background-color: #F8F9FA;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .comment-author { font-weight: 600; color: #202124; }
+        .comment-date { color: #5F6368; }
+
+        .comment-input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #DADCE0;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .comment-submit {
+            background-color: #6366F1;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-bar">
+        <a href="#" class="header-title">AI Navigate</a>
+        <a href="#" class="header-back">← 메인으로 돌아가기</a>
+    </header>
+
+    <main class="main-content">
+        <section class="card-container">
+            <div class="card-inner">
+                <div class="ai-header">
+                    <div class="ai-logo">
+                        <img src="Monica.svg" alt="Monica Logo" class="ai-logo-img">
+                    </div>
+                    <div class="ai-info">
+                        <h1>Monica</h1>
+                        <span class="ai-tag">올인원 AI 브라우저 어시스턴트</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3>💡 이 AI는 언제 쓰면 좋을까요?</h3>
+                <p>
+                    Monica는 웹 서핑 중에 즉시 도움을 받고 싶을 때 최적인 도구입니다. 크롬 확장 프로그램을 통해 어떤 웹페이지에서든 사이드바를 열어 실시간 대화, 텍스트 요약, 번역, 문법 교정 등의 작업을 수행할 수 있습니다. 복잡한 기사를 빠르게 읽거나 이메일을 작성할 때 효율을 극대화합니다.
+                </p>
+
+                <h3>🎯 실전 프롬프트 예시</h3>
+                <div class="prompt-box">
+                    "지금 내가 읽고 있는 이 기사의 핵심 내용을 3가지 항목으로 요약해주고, 
+                    관련해서 내가 더 알아야 할 배경지식이 있다면 설명해줘."
+                </div>
+
+                <h3>🛠️ 활용 꿀팁</h3>
+                <p>
+                    Monica는 단순한 채팅을 넘어 웹상의 이미지를 인식하거나 PDF 문서를 분석하는 데에도 탁월합니다. 브라우저 전체 검색 결과를 비교 분석해주는 기능을 활용하면 정보를 찾는 시간을 획기적으로 줄일 수 있습니다. 단축키를 설정해두면 언제 어디서든 AI 어시스턴트를 불러낼 수 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <aside class="card-container sidebar">
+            <div class="card-inner">
+                <h3>한눈에 보는 핵심 기능</h3>
+                <ul class="feature-list">
+                    <li>웹페이지 실시간 요약 및 번역</li>
+                    <li>GPT-4, Claude 등 다중 모델 지원</li>
+                    <li>PDF 문서 및 이미지 분석 기능</li>
+                    <li>스마트 검색 및 이메일 작성 어시스트</li>
+                </ul>
+
+                <a href="#" class="cta-button">Monica 바로 시작하기</a>
+
+                <div class="comments-section">
+                    <h3>후기 및 댓글</h3>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">익명</span>
+                            <span class="comment-date">2026-05-16</span>
+                        </div>
+                        <p style="margin:0; font-size:14px; color: #3C4043;">브라우저에 항상 띄워놓고 쓰는데 정말 편리합니다.</p>
+                    </div>
+
+                    <div class="comment-input-group">
+                        <input type="text" class="comment-input" placeholder="후기를 남겨주세요...">
+                        <button class="comment-submit">▶</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamma - AI Navigate</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F8F9FA;
+            color: #202124;
+        }
+
+        .header-bar {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            margin: 20px 40px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #001F3F;
+            text-decoration: none;
+        }
+
+        .header-back {
+            margin: 25px 40px;
+            color: #5F6368; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        .header-back:hover {
+            color: #001F3F; 
+            text-decoration: none; 
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static !important;
+            }
+        }
+
+        .card-container {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 16px;
+        }
+
+        .card-inner {
+            padding: 40px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .ai-logo {
+            width: auto;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ai-logo-img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .ai-info h1 {
+            margin: 0 0 8px 0;
+            font-size: 32px;
+            font-weight: bold;
+            color: #001F3F;
+        }
+
+        .ai-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #E6E9ED;
+            color: #001F3F;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #DADCE0;
+            margin: 30px 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+            color: #001F3F;
+        }
+
+        p {
+            line-height: 1.7;
+            color: #3C4043;
+            margin-bottom: 25px;
+        }
+
+        .prompt-box {
+            background-color: #F8F9FA;
+            border-left: 4px solid #001F3F;
+            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            color: #202124;
+            font-size: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #5F6368;
+            font-size: 15px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #001F3F;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #001F3F;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .comments-section {
+            border-top: 1px solid #DADCE0;
+            padding-top: 30px;
+        }
+
+        .comment-item {
+            background-color: #F8F9FA;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .comment-author { font-weight: 600; color: #202124; }
+        .comment-date { color: #5F6368; }
+
+        .comment-input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #DADCE0;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .comment-submit {
+            background-color: #001F3F;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-bar">
+        <a href="#" class="header-title">AI Navigate</a>
+        <a href="#" class="header-back">← 메인으로 돌아가기</a>
+    </header>
+
+    <main class="main-content">
+        <section class="card-container">
+            <div class="card-inner">
+                <div class="ai-header">
+                    <div class="ai-logo">
+                        <img src="Gamma.svg" alt="Gamma Logo" class="ai-logo-img">
+                    </div>
+                    <div class="ai-info">
+                        <h1>Gamma</h1>
+                        <span class="ai-tag">AI 프리젠테이션 어시스턴트</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3>💡 이 AI는 언제 쓰면 좋을까요?</h3>
+                <p>
+                    Gamma는 복잡한 슬라이드 디자인이나 레이아웃 구성에 시간을 쏟고 싶지 않을 때 최적의 도구입니다. 간단한 아이디어나 텍스트만 입력하면 AI가 자동으로 시각적인 슬라이드, 문서, 웹페이지 초안을 생성해 주어 업무 효율을 극대화합니다.
+                </p>
+
+                <h3>🎯 실전 프롬프트 예시</h3>
+                <div class="prompt-box">
+                    "2026년 인공지능 산업의 핵심 트렌드와 발전 전망에 관한 프레젠테이션을 만들어줘. 
+                    신뢰감을 주는 네이비 톤을 사용하고 기술적 내용을 시각적 다이어그램으로 표현해줘."
+                </div>
+
+                <h3>🛠️ 활용 꿀팁</h3>
+                <p>
+                    AI와 실시간 채팅을 통해 "이 섹션을 더 짧게 요약해줘"라거나 "더 화려한 테마로 변경해줘"와 같이 세부적인 디자인 수정을 요청할 수 있습니다. 반응형 카드 레이아웃을 사용하므로 모바일이나 웹 어디서든 최적화된 결과물을 확인할 수 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <aside class="card-container sidebar">
+            <div class="card-inner">
+                <h3>한눈에 보는 핵심 기능</h3>
+                <ul class="feature-list">
+                    <li>텍스트 기반 슬라이드·웹 자동 생성</li>
+                    <li>채팅을 통한 AI 실시간 레이아웃 편집</li>
+                    <li>모든 디바이스에 최적화된 반응형 디자인</li>
+                    <li>전문적인 디자인 테마 원클릭 적용</li>
+                </ul>
+
+                <a href="#" class="cta-button">Gamma 바로 시작하기</a>
+
+                <div class="comments-section">
+                    <h3>후기 및 댓글</h3>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">익명</span>
+                            <span class="comment-date">2026-05-16</span>
+                        </div>
+                        <p style="margin:0; font-size:14px; color: #3C4043;">기획 단계에서 발표 자료 구조를 잡을 때 정말 유용합니다.</p>
+                    </div>
+
+                    <div class="comment-input-group">
+                        <input type="text" class="comment-input" placeholder="후기를 남겨주세요...">
+                        <button class="comment-submit">▶</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+</body>
+</html>

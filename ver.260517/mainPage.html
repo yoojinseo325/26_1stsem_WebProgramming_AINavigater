@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Navigate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-nav">
+    <a href="#" class="logo"><img src="icons/coapass.svg" alt="compass icon" class="logo-icon"> AI Navigate</a>
+    <div class="nav-links">
+      <!-- 추후 로그인이나 메뉴 버튼 추가 가능 -->
+    </div>
+  </header>
+
+  <!-- 메인 영역 -->
+  <main>
+    <!-- 히어로 섹션: 웹페이지의 목적을 알리고 필터링 제공 -->
+    <section class="hero-section">
+      <h1 class="hero-title">상황에 맞는 최적의 AI를 찾아보세요</h1>
+      <p class="hero-subtitle">문서 작성부터 이미지 생성, 코딩까지. 나에게 필요한 도구를 선택하세요.</p>
+      
+      <div class="category-filters">
+        <button class="filter-btn active">전체보기</button>
+        <button class="filter-btn">텍스트·문서 요약</button>
+        <button class="filter-btn">프로그래밍·코딩</button>
+        <button class="filter-btn">이미지·디자인</button>
+      </div>
+    </section>
+
+    <!-- AI 리스트 섹션: 카드들이 배치되는 곳 -->
+    <section class="content-section">
+      <div class="ai-grid">
+        
+        <!-- 카드 1: Gemini -->
+        <article class="ai-card">
+          <header class="card-header">
+            <div class="ai-logo logo-gemini">G</div>
+            <div>
+              <h2 class="ai-title">Gemini</h2>
+              <p class="ai-subtitle">구글 워크스페이스 연동 특화</p>
+            </div>
+          </header>
+          <div class="card-body">
+            <p>실시간 검색 기반의 정보 제공과 문서 요약에 탁월합니다. 구글 생태계 환경에서 작업 효율을 극대화할 수 있습니다.</p>
+          </div>
+          <button class="action-btn">사용 가이드 보기</button>
+        </article>
+
+        <!-- 카드 2: ChatGPT -->
+        <article class="ai-card">
+          <header class="card-header">
+            <div class="ai-logo logo-gpt">C</div>
+            <div>
+              <h2 class="ai-title">ChatGPT</h2>
+              <p class="ai-subtitle">가장 대중적인 범용 AI</p>
+            </div>
+          </header>
+          <div class="card-body">
+            <p>자연스러운 대화와 깊이 있는 코딩, 데이터 분석에 강점을 가집니다. 논리적인 글쓰기 구조를 잡을 때 유용합니다.</p>
+          </div>
+          <button class="action-btn">사용 가이드 보기</button>
+        </article>
+
+        <!-- 카드 3: Midjourney -->
+        <article class="ai-card">
+          <header class="card-header">
+            <div class="ai-logo logo-midjourney">M</div>
+            <div>
+              <h2 class="ai-title">Midjourney</h2>
+              <p class="ai-subtitle">고품질 이미지 생성기</p>
+            </div>
+          </header>
+          <div class="card-body">
+            <p>텍스트 프롬프트를 입력하여 예술적이고 전문가 수준의 이미지를 빠르게 생성할 수 있습니다. 발표 자료 시각화에 적합합니다.</p>
+          </div>
+          <button class="action-btn">사용 가이드 보기</button>
+        </article>
+      </div>
+    </section>
+  </main>  
+</body>
+</html>

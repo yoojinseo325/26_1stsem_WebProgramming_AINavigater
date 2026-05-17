@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genspark - AI Navigate</title>
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --text-main: #202124;
+            --text-sub: #5F6368;
+            --primary-color: #1A73E8;
+            --card-bg: #FFFFFF;
+            --border-color: #DADCE0;
+        }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            padding-top: 80px;
+        }
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+        .detail-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        .main-content {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .ai-logo-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .ai-logo-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ai-title {
+            font-size: 32px;
+            margin: 0 0 8px 0;
+        }
+        .ai-category {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #E8F0FE;
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 20px;
+            margin: 30px 0 15px 0;
+        }
+        p {
+            line-height: 1.7;
+            color: #3C4043;
+            margin-bottom: 20px;
+        }
+        .prompt-box {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            font-family: monospace;
+            font-size: 15px;
+            color: #1A73E8;
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            height: fit-content;
+        }
+        .sidebar-title {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            color: var(--text-sub);
+            font-size: 15px;
+        }
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .launch-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #8B5CF6, #EC4899);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .launch-btn:hover {
+            opacity: 0.9;
+        }
+        .comments-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+        .comment-item {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .comment-author {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .comment-date {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+        .comment-text {
+            font-size: 14px;
+            color: #3C4043;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .comment-input-section {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .comment-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .comment-submit {
+            padding: 10px 16px;
+            background: linear-gradient(to right, #8B5CF6, #EC4899);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .comment-submit:hover {
+            opacity: 0.9;
+        }
+        .comments-list {
+            max-height: 320px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 900px) {
+            .detail-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <a href="#" class="logo">AI Navigate</a>
+        <a href="#" class="back-btn">← 메인으로 돌아가기</a>
+    </header>
+    <main class="detail-container">
+        <section class="main-content">
+            <div class="ai-header">
+                <div class="ai-logo-large">
+                    <img src="../imports/3.png" alt="Genspark">
+                </div>
+                <div>
+                    <h1 class="ai-title">Genspark</h1>
+                    <span class="ai-category">AI 검색·정보 통합</span>
+                </div>
+            </div>
+            <article>
+                <h3>💡 이 AI는 언제 쓰면 좋을까요?</h3>
+                <p>Genspark는 AI 기반의 차세대 검색 엔진으로, 단순히 링크 목록을 제공하는 대신 검색어에 맞춤화된 종합 페이지를 자동으로 생성합니다. 여러 출처의 정보를 수집하고 분석하여 구조화된 형태로 제공하므로, 복잡한 주제를 빠르게 이해하거나 여러 관점을 비교 분석해야 할 때 매우 효과적입니다.</p>
+                <h3>🎯 실전 프롬프트 예시</h3>
+                <p>검색창에 구체적인 질문이나 주제를 입력하면, AI가 자동으로 관련 정보를 수집하고 정리합니다.</p>
+                <div class="prompt-box">"2026년 최신 머신러닝 프레임워크 비교 - PyTorch vs TensorFlow vs JAX"</div>
+                <h3>🛠️ 활용 꿀팁</h3>
+                <p>Genspark는 검색 결과를 단순 나열하지 않고, 주제별로 섹션을 나누어 정리해줍니다. 각 섹션에는 신뢰할 수 있는 출처의 정보가 통합되어 있어, 여러 탭을 오가며 정보를 비교할 필요가 없습니다. 특히 기술 문서, 제품 비교, 학술 연구 등 깊이 있는 조사가 필요한 분야에서 강점을 발휘합니다.</p>
+            </article>
+        </section>
+        <aside class="sidebar">
+            <h3 class="sidebar-title">한눈에 보는 핵심 기능</h3>
+            <ul class="feature-list">
+                <li>맞춤형 검색 결과 페이지 자동 생성</li>
+                <li>다중 소스 정보 통합 및 요약</li>
+                <li>구조화된 섹션별 정보 제공</li>
+                <li>신뢰할 수 있는 출처 기반 검색</li>
+            </ul>
+            <button class="launch-btn">Genspark 바로 시작하기</button>
+            <div class="comments-section">
+                <h3 class="sidebar-title">후기 및 댓글</h3>
+                <div class="comments-list" id="commentsList">
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">익명</span>
+                            <span class="comment-date">2026-05-10</span>
+                        </div>
+                        <p class="comment-text">검색 결과가 정리되어 나와서 시간 절약이 많이 됩니다</p>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">익명</span>
+                            <span class="comment-date">2026-05-11</span>
+                        </div>
+                        <p class="comment-text">여러 자료를 한번에 비교할 수 있어서 편리해요</p>
+                    </div>
+                </div>
+                <div class="comment-input-section">
+                    <input type="text" class="comment-input" id="commentInput" placeholder="후기를 남겨주세요...">
+                    <button class="comment-submit" onclick="addComment()">▶</button>
+                </div>
+            </div>
+        </aside>
+    </main>
+    <script>
+        function addComment() {
+            const input = document.getElementById('commentInput');
+            const commentText = input.value.trim();
+            if (commentText) {
+                const commentsList = document.getElementById('commentsList');
+                const today = new Date().toISOString().split('T')[0];
+                const commentItem = document.createElement('div');
+                commentItem.className = 'comment-item';
+                commentItem.innerHTML = '<div class="comment-header"><span class="comment-author">익명</span><span class="comment-date">' + today + '</span></div><p class="comment-text">' + commentText + '</p>';
+                commentsList.appendChild(commentItem);
+                input.value = '';
+            }
+        }
+        document.getElementById('commentInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addComment();
+        });
+    </script>
+</body>
+</html>
